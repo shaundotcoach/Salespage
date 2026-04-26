@@ -56,13 +56,18 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
-  body {
+ body {
     font-family: var(--font-body);
     background: var(--warm-white);
     color: var(--text-dark);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
-  }
+    padding-bottom: 90px; /* clears the sticky CTA bar */
+}
+
+@media (min-width: 600px) {
+    body { padding-bottom: 80px; }
+}
 
   /* ── NAV ── */
   .site-nav {
