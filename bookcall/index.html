@@ -229,6 +229,43 @@
   .not-ready p { max-width: 520px; margin: 0 auto 22px; }
   .not-ready .links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+
+  /* Client stories marquee */
+  .stories { background: var(--soft); padding: 72px 0 80px; overflow: hidden; }
+  .stories-head { text-align: center; padding: 0 var(--pad-x); margin-bottom: 36px; }
+  .stories-head .eyebrow { display: block; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--yg-dark); margin-bottom: 10px; }
+  .stories-head h2 { margin-bottom: 10px; }
+  .stories-head p { margin: 0 auto; max-width: 520px; }
+  .marquee { position: relative; }
+  .marquee::before, .marquee::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  }
+  .marquee::before { left: 0; background: linear-gradient(90deg, var(--soft), rgba(243,245,239,0)); }
+  .marquee::after { right: 0; background: linear-gradient(270deg, var(--soft), rgba(243,245,239,0)); }
+  .marquee-track { display: flex; gap: 28px; width: max-content; animation: marquee var(--marquee-duration, 40s) linear infinite; }
+  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .story-card { flex: 0 0 auto; width: 260px; text-decoration: none; color: var(--text-dark); }
+  .story-card img {
+    display: block; width: 100%; height: auto; aspect-ratio: 210 / 297; object-fit: cover;
+    border: 2px solid var(--navy);
+    box-shadow: 0 10px 30px rgba(17,19,17,0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .story-card:hover img { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(17,19,17,0.18); }
+  .story-card .meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 12px; }
+  .story-card strong { font-size: 16px; font-weight: 800; text-transform: uppercase; }
+  .story-card span { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--yg-dark); }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    .marquee { overflow-x: auto; padding: 0 var(--pad-x); }
+  }
+  @media (max-width: 640px) {
+    .stories { padding: 56px 0 64px; }
+    .story-card { width: 210px; }
+    .marquee::before, .marquee::after { width: 32px; }
+  }
+
   /* Footer */
   footer { background: var(--footer-bg); padding: 28px 20px; text-align: center; }
   footer p { font-size: 14px; color: #6b6b6b; margin: 0; }
@@ -324,6 +361,31 @@
     <blockquote>&ldquo;I feel like I&rsquo;m playing on <em>easy mode</em>, and still achieving results.&rdquo;</blockquote>
     <cite>Lewis Fearns, From Pain to Performance Online Coach</cite>
   </section>
+
+  <section class="stories" aria-label="Client stories">
+    <div class="stories-head">
+      <span class="eyebrow">Client stories</span>
+      <h2>In their <span style="color:var(--yg-dark)">own words.</span></h2>
+      <p>Tap any story to read it in full.</p>
+    </div>
+    <div class="marquee">
+      <div class="marquee-track" id="storiesTrack">
+        <a class="story-card" href="stories/chris-r-story.pdf" target="_blank" rel="noopener">
+          <img src="stories/chris-r-story.jpg" alt="Client story: Chris R., IT Business Owner" loading="lazy" width="596" height="843">
+          <div class="meta"><strong>Chris R.</strong><span>Read story &rarr;</span></div>
+        </a>
+        <a class="story-card" href="stories/lewis-f-story.pdf" target="_blank" rel="noopener">
+          <img src="stories/lewis-f-story.jpg" alt="Client story: Lewis F., Pain to Performance business owner" loading="lazy" width="596" height="843">
+          <div class="meta"><strong>Lewis F.</strong><span>Read story &rarr;</span></div>
+        </a>
+        <a class="story-card" href="stories/philip-story.pdf" target="_blank" rel="noopener">
+          <img src="stories/philip-story.jpg" alt="Client story: Philip McN, DevSecOps Software Engineer" loading="lazy" width="596" height="843">
+          <div class="meta"><strong>Philip McN</strong><span>Read story &rarr;</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -389,6 +451,25 @@
       wrap.innerHTML = '';
       wrap.appendChild(load(base + '&autoplay=1&muted=0&controls=1'));
     });
+  })();
+
+  // Client stories: repeat the cards so the loop is seamless on any screen width
+  (function () {
+    var track = document.getElementById('storiesTrack');
+    if (!track) return;
+    var originals = Array.prototype.slice.call(track.children);
+    function setWidth() { return originals.reduce(function (w, c) { return w + c.getBoundingClientRect().width + 28; }, 0); }
+    var one = setWidth();
+    var copies = Math.max(1, Math.ceil(window.innerWidth / one));
+    var half = document.createDocumentFragment();
+    for (var i = 1; i < copies; i++) originals.forEach(function (c) { half.appendChild(c.cloneNode(true)); });
+    track.appendChild(half);
+    // duplicate the whole first half so translateX(-50%) loops perfectly
+    Array.prototype.slice.call(track.children).forEach(function (c) {
+      var clone = c.cloneNode(true); clone.setAttribute('aria-hidden', 'true'); clone.tabIndex = -1; track.appendChild(clone);
+    });
+    // constant speed (about 40px per second) whatever the number of cards
+    track.style.setProperty('--marquee-duration', Math.round((one * copies) / 40) + 's');
   })();
 </script>
 </body>
