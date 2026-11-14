@@ -98,10 +98,17 @@ h1 span{color:var(--lime);display:block}
 }
 .signup button:hover{transform:translateY(-1px)}
 .signup button:disabled{opacity:.6;cursor:wait}
-.done{display:none;min-height:52px;align-content:center;gap:2px 14px}
-.done strong{font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+.done{display:none;gap:12px;max-width:640px;margin:0 auto}
+.done strong{font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:1.1}
+.confirm{margin:0;background:var(--white);border:2px solid var(--ink);border-radius:8px;padding:14px 16px;font-size:16px;line-height:1.45}
+.confirm b{display:block;margin-bottom:4px;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+.confirm small{display:block;margin-top:6px;font-size:13px;color:var(--graphite)}
+.now{display:flex;align-items:center;justify-content:center;gap:10px;font:800 16px/1 var(--font);text-transform:uppercase;letter-spacing:.01em;color:var(--white);background:var(--ink);border-radius:12px;padding:18px 20px;text-decoration:none;text-align:center;transition:transform .15s ease}
+.now:hover{transform:translateY(-1px)}
 .signup.submitted form{display:none}
 .signup.submitted .done{display:grid}
+/* Once they've signed up, the sliders have done their job */
+.page.submitted .balance,.page.submitted .strip{display:none}
 .privacy{margin:10px 2px 0;font-size:12px;line-height:1.4;color:rgba(17,19,17,.7)}
 
 /* ---------- Testimonial ---------- */
@@ -151,23 +158,6 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
     <div class="eyebrow">Free mini-course</div>
   </header>
 
-  <section class="signup" id="signup" aria-label="Get the free course">
-    <h1 class="form-title">End Overthinking?</h1>
-    <form id="form" action="https://app.kit.com/forms/9229059/subscriptions" method="post">
-      <label class="sr-only" for="first_name">First name</label>
-      <input id="first_name" name="first_name" placeholder="First name" autocomplete="given-name" required>
-      <label class="sr-only" for="email">Email address</label>
-      <input id="email" name="email_address" type="email" placeholder="Email address" autocomplete="email" inputmode="email" required>
-      <input type="hidden" name="fields[overthinking_score]" id="score" value="80">
-      <button type="submit">Get the free course <span aria-hidden="true">→</span></button>
-    </form>
-    <div class="done" role="status">
-      <strong>✓ You’re in, <span id="done-name"></span></strong>
-      <span>Check your inbox for module 1.</span>
-    </div>
-  </section>
-
-
   <section class="balance" aria-label="Where are you right now?">
     <div class="side dark">
       <div class="meter" data-key="overthinking">
@@ -211,6 +201,23 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
     <div class="eyebrow" id="strip-label"><span class="hint-v">↕</span><span class="hint-h">↔</span> Drag the sliders</div>
     <p id="message">Wired, busy, can’t switch off. This isn’t a character flaw – it’s thinking that hasn’t settled yet.</p>
   </div>
+
+  <section class="signup" id="signup" aria-label="Get the free course">
+    <h1 class="form-title">End Overthinking?</h1>
+    <form id="form" action="https://app.kit.com/forms/9229059/subscriptions" method="post">
+      <label class="sr-only" for="first_name">First name</label>
+      <input id="first_name" name="first_name" placeholder="First name" autocomplete="given-name" required>
+      <label class="sr-only" for="email">Email address</label>
+      <input id="email" name="email_address" type="email" placeholder="Email address" autocomplete="email" inputmode="email" required>
+      <input type="hidden" name="fields[overthinking_score]" id="score" value="80">
+      <button type="submit">Get the free course <span aria-hidden="true">→</span></button>
+    </form>
+    <div class="done" role="status">
+      <strong>✓ Nearly there, <span id="done-name"></span></strong>
+      <p class="confirm"><b>One more step: confirm your email</b>We’ve just sent an email to <span id="done-email"></span>. Click the confirm button in it and module 1 is on its way.<small>Can’t see it? Check your spam or promotions folder.</small></p>
+      <a class="now" href="/overthinking/course/?access=true">Give me access to the course now <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
 
 
   <figure>
@@ -262,7 +269,7 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
     scoreInput.value = o;
     if (state.touched) {
       app.classList.add('touched');
-      stripLabel.textContent = 'Overthinking at ' + o;
+      stripLabel.textContent = 'Your Overthinking level ' + o + '/100';
     }
   }
 
@@ -331,7 +338,9 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
       .catch(function () {})
       .then(function () {
         document.getElementById('done-name').textContent = name;
+        document.getElementById('done-email').textContent = email;
         document.getElementById('signup').classList.add('submitted');
+        app.classList.add('submitted');
       });
   });
 
