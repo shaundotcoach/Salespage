@@ -74,9 +74,16 @@
   .gate-success { margin: 0; background: #fff; border-left: 6px solid var(--lime); border-radius: var(--r-lg); padding: 20px 24px; }
 
   /* Start Here card */
-  .start { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); width: 100%; padding: 0; text-align: left; background: #fff; border: 2px solid var(--ink); border-radius: var(--r-lg); overflow: hidden; color: var(--ink); font: inherit; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
-  .start:hover { transform: translateY(-2px); box-shadow: 8px 8px 0 var(--lime); }
-  .start.is-open { box-shadow: 0 0 0 3px var(--lime); }
+  .start { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); width: 100%; padding: 0; text-align: left; background: #fff; border: 2px solid var(--ink); border-radius: var(--r-lg); overflow: hidden; color: var(--ink); transition: box-shadow .2s ease; scroll-margin-top: 16px; }
+  .start:has(.thumb-btn:hover) { box-shadow: 8px 8px 0 var(--lime); }
+  .start.is-open, .start.is-playing { box-shadow: 0 0 0 3px var(--lime); }
+  .thumb-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; width: 100%; padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+  .thumb-btn .play-dot { transition: transform .2s ease; }
+  .thumb-btn:hover .play-dot { transform: scale(1.08); }
+  .thumb-btn:focus-visible, .start-letter:focus-visible { outline: 3px solid var(--lime); outline-offset: -3px; }
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .thumb .player-empty { position: absolute; inset: 0; }
+  .start-letter { align-self: flex-start; padding: 0; border: 0; background: none; font: inherit; font-size: 15px; font-weight: 800; color: var(--ink); text-decoration: underline; text-decoration-color: var(--lime); text-decoration-thickness: 3px; text-underline-offset: 5px; cursor: pointer; }
   .thumb { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 9; background: var(--ink); overflow: hidden; }
   .thumb-num { position: absolute; right: -12px; bottom: -56px; font-size: 260px; font-weight: 900; line-height: 1; letter-spacing: -.04em; color: #1d211d; }
   .thumb-word { position: absolute; left: 24px; bottom: 18px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--lime); }
@@ -101,7 +108,7 @@
   .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
   .card { position: relative; display: flex; flex-direction: column; min-height: 240px; padding: 20px; text-align: left; background: var(--ink); color: #fff; border: 0; border-radius: var(--r-lg); font: inherit; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; scroll-margin-top: 16px; }
   .card:hover { transform: translateY(-3px); box-shadow: 0 0 0 2px var(--lime); }
-  .start:focus-visible, .card:focus-visible, .bcard:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+  .card:focus-visible, .bcard:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
   .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
   .card-num { font-size: 48px; font-weight: 900; line-height: .9; letter-spacing: -.035em; color: var(--lime); }
   .badge { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #434843; color: #fff; }
@@ -134,10 +141,13 @@
   .bcard:disabled .bthumb { background: #d9ddd2; color: #7d8178; }
 
   /* Module panel (opens under the row that was clicked) */
-  .panel { grid-column: 1 / -1; margin: 6px 0; background: #fff; border: 2px solid var(--ink); border-top: 6px solid var(--lime); border-radius: var(--r-xl); overflow: hidden; scroll-margin-top: 16px; animation: fadeUp .35s ease both; }
+  .panel { grid-column: 1 / -1; margin: 6px 0; background: #fff; border: 2px solid var(--ink); border-top: 6px solid var(--lime); border-radius: var(--r-xl); overflow: hidden; overflow: clip; scroll-margin-top: 16px; animation: fadeUp .35s ease both; }
   .panel-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
   .panel-main { padding: 32px 40px 44px; min-width: 0; }
-  .player { position: relative; aspect-ratio: 16 / 9; background: var(--ink); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 36px; }
+  /* The dock holds the video. It sticks to the top while the notes slide underneath it. */
+  .dock { position: relative; z-index: 2; margin-bottom: 36px; background: #fff; }
+  .dock::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 28px; background: linear-gradient(#fff, rgba(255,255,255,0)); pointer-events: none; }
+  .player { position: relative; aspect-ratio: 16 / 9; background: var(--ink); border-radius: var(--r-lg); overflow: hidden; }
   .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .player-empty { display: flex; align-items: center; justify-content: center; color: var(--mute-dark); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
   .notes { max-width: 680px; }
@@ -180,12 +190,20 @@
   footer a { color: #b5b5b5; text-decoration: none; }
   footer a:hover { color: var(--lime); }
 
-  /* Desktop: panel fits the screen, video stays put, notes scroll underneath it */
-  @media (min-width: 1001px) and (min-height: 620px) {
-    .panel-main { display: flex; flex-direction: column; height: calc(100vh - 44px); padding-bottom: 0; }
-    .player { flex-shrink: 0; width: min(100%, calc((100vh - 44px) * .56 * 16 / 9)); margin-bottom: 0; }
-    .notes { flex: 1; min-height: 0; max-width: none; overflow-y: auto; padding: 28px 16px 44px 0; scrollbar-width: thin; scrollbar-color: #c4c8bd transparent; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22px, #000 calc(100% - 36px), transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 22px, #000 calc(100% - 36px), transparent 100%); }
+  /* Desktop: the panel fits the screen and scrolls on its own. The video stays put and the notes slide under it.
+     Once the notes reach the end, scrolling carries on down the page. */
+  @media (min-width: 1001px) {
+    .panel-grid { height: calc(100vh - 44px); min-height: 420px; }
+    .panel-main { overflow-y: auto; padding-top: 0; scrollbar-width: thin; scrollbar-color: #c4c8bd transparent; }
+    .dock { position: sticky; top: 0; padding-top: 32px; margin-bottom: 28px; }
+    .player { width: min(100%, calc((100vh - 44px) * .55 * 16 / 9)); }
+    .notes { max-width: none; }
     .notes > * { max-width: 680px; }
+    .panel-side { overflow-y: auto; }
+  }
+  /* Tablet and phone held upright: the video sticks to the top of the screen while you read, until the module ends */
+  @media (max-width: 1000px) and (orientation: portrait) {
+    .dock { position: sticky; top: 0; padding-top: 16px; margin-top: -16px; }
   }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -222,7 +240,9 @@
     .card-title { font-size: 16px; }
     .bonus-grid { grid-template-columns: minmax(0, 1fr); }
     .panel-main { padding: 0 0 28px; }
-    .player { border-radius: 0; margin-bottom: 24px; }
+    .dock { margin-bottom: 24px; padding-top: 0 !important; margin-top: 0 !important; }
+    .dock::after { height: 20px; }
+    .player { border-radius: 0; }
     .notes { padding: 0 20px; }
     .notes h2 { font-size: 30px; }
     .panel-side { padding: 24px 20px; }
@@ -283,15 +303,16 @@
   </div>
 
   <div id="start-wrap">
-    <button class="start" type="button" data-id="start">
-      <span class="thumb"><span class="thumb-num" aria-hidden="true">00</span><span class="play-dot"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="thumb-word">Start here</span></span>
-      <span class="start-body">
+    <div class="start" data-id="start">
+      <div class="thumb" id="start-media"><button class="thumb-btn" type="button" id="start-play" aria-label="Play: How to Listen for Maximum Impact"><span class="thumb-num" aria-hidden="true">00</span><span class="play-dot"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="thumb-word">Start here</span></button></div>
+      <div class="start-body">
         <span class="kicker">Start here · Watch before Module 1</span>
         <span class="start-title">How to Listen for Maximum Impact</span>
         <span class="start-copy">How to listen so this lands. Not to decide whether you agree with me, but for what is new to you.</span>
+        <button class="start-letter" type="button" id="start-letter" aria-expanded="false">Read the welcome letter →</button>
         <span class="start-foot"><span class="badge"></span><span class="foot-text"></span></span>
-      </span>
-    </button>
+      </div>
+    </div>
     <div id="start-slot"></div>
   </div>
 
@@ -560,7 +581,7 @@ const nextOf = x => {
 };
 
 function footText(x) {
-  if (openId === x.id) return 'Now playing';
+  if (x.kind === 'start' ? startPlaying : openId === x.id) return 'Now playing';
   if (isLocked(x)) return mode === 'email' ? 'Arrives by email' : 'Unlocks on sign-up';
   if (watched[x.id]) return 'Watched';
   if (x.kind !== 'module' && !x.video) return 'Coming soon';
@@ -586,13 +607,13 @@ function buildCards() {
 }
 
 function updateCards() {
-  document.querySelectorAll('button[data-id]').forEach(el => {
+  document.querySelectorAll('[data-id]').forEach(el => {
     const x = byId[el.dataset.id];
     const locked = isLocked(x), open = openId === x.id, done = !!watched[x.id];
-    el.disabled = locked;
     el.classList.toggle('is-open', open);
     el.classList.toggle('is-watched', done && !locked);
-    el.setAttribute('aria-expanded', String(open));
+    if (el.tagName === 'BUTTON') { el.disabled = locked; el.setAttribute('aria-expanded', String(open)); }
+    else $('start-letter').setAttribute('aria-expanded', String(open));
     el.querySelector('.badge').innerHTML = locked ? I_LOCK : (done ? I_CHECK : I_PLAY);
     el.querySelector('.card-foot, .bfoot, .foot-text').textContent = footText(x);
   });
@@ -619,8 +640,10 @@ function watchButtonHTML(x) {
 function buildPanel(x) {
   const nx = nextOf(x);
   let player = '';
-  if (x.video) player = `<div class="player"><iframe src="${x.video}" title="${label(x)}: ${x.title.replace(/&amp;/g, '&')}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
-  else if (x.kind !== 'module') player = '<div class="player player-empty"><span>Video coming soon</span></div>';
+  // Start Here plays in its own card, so its panel is just the welcome letter (except in the email view)
+  if (x.kind === 'start' && mode !== 'email') player = '';
+  else if (x.video) player = `<div class="dock"><div class="player"><iframe src="${x.video}" title="${label(x)}: ${x.title.replace(/&amp;/g, '&')}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>`;
+  else if (x.kind !== 'module') player = '<div class="dock"><div class="player player-empty"><span>Video coming soon</span></div></div>';
   const body = x.text || '<p>Notes for this video are on their way.</p>';
   const call = x.call ? `<p class="call-line">Want to talk this through properly? <a href="${CALL_URL}">Book a call with Shaun →</a></p>` : '';
   const back = mode === 'email' ? '' : `<button class="back" type="button" data-act="close">Back to ${x.kind === 'bonus' ? 'bonus library' : 'modules'}</button>`;
@@ -643,6 +666,16 @@ function buildPanel(x) {
     if (b.dataset.act === 'close') close();
     if (b.dataset.act === 'next' && nx) { setWatched(x.id, true); open(nx.id, true); }
   });
+  // Desktop: scrolling over the sidebar moves the notes too (over the notes and the video the browser does it itself)
+  el.addEventListener('wheel', e => {
+    if (!matchMedia('(min-width: 1001px)').matches || e.ctrlKey) return;
+    const main = el.querySelector('.panel-main');
+    if (main.contains(e.target)) return;
+    // Once the notes hit the end, the page carries on as normal
+    const before = main.scrollTop;
+    main.scrollTop += e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY;
+    if (main.scrollTop !== before) e.preventDefault();
+  }, { passive: false });
   const iframe = el.querySelector('iframe');
   if (iframe) hookVimeo(iframe, x.id);
   return el;
@@ -708,6 +741,26 @@ function close() {
   updateCards();
   if (id) scrollToEl($('card-' + id), true);
 }
+
+// Start Here: the video plays right there in the card
+let startPlaying = false;
+function playStart() {
+  const media = $('start-media');
+  if (START.video) {
+    const src = START.video + (START.video.includes('?') ? '&' : '?') + 'autoplay=1';
+    media.innerHTML = `<iframe src="${src}" title="Start here: ${START.title}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    hookVimeo(media.querySelector('iframe'), 'start');
+  } else {
+    media.innerHTML = '<div class="player-empty"><span>Video coming soon</span></div>';
+  }
+  startPlaying = true;
+  document.querySelector('.start').classList.add('is-playing');
+  updateCards();
+}
+$('start-play').addEventListener('click', playStart);
+$('start-letter').addEventListener('click', () => {
+  if (openId === 'start') close(); else open('start', true);
+});
 
 let resizeTimer;
 window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(placePanel, 150); });
