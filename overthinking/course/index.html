@@ -180,6 +180,8 @@
   .next small { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--lime); }
   .next strong { display: block; font-size: 18px; line-height: 1.25; }
   .next-arrow { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--lime); }
+  .call-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 56px; padding: 0 18px; border: 0; border-radius: var(--r-md); background: var(--lime); color: var(--ink); font: inherit; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; text-decoration: none; cursor: pointer; text-align: center; transition: background .15s ease; }
+  .call-btn:hover { background: var(--lime-hover); }
   .side-note { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--mute); }
   .back { display: block; width: 100%; min-height: 48px; margin-top: 4px; padding: 0 18px; border: 2px solid var(--ink); border-radius: var(--r-md); background: transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; cursor: pointer; }
   .back:hover { background: #fff; }
@@ -312,7 +314,7 @@
 
   <div id="start-wrap">
     <div class="start" data-id="start">
-      <div class="thumb has-poster" id="start-media" style="background-image: linear-gradient(180deg, rgba(17,19,17,0) 40%, rgba(17,19,17,.78) 100%), url('https://i.vimeocdn.com/video/2226959222-3bc65664e65a7794da49d7b791e3a1e31f065a5f64cc19d4aacee2983d7ba34f-d_1920x1080?region=us')"><button class="thumb-btn" type="button" id="start-play" aria-label="Play: How to Listen for Maximum Impact"><span class="thumb-num" aria-hidden="true">00</span><span class="play-dot"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="thumb-word">Start here</span></button></div>
+      <div class="thumb has-poster" id="start-media" style="background-image: linear-gradient(180deg, rgba(17,19,17,.08) 0%, rgba(17,19,17,.2) 30%, rgba(17,19,17,.55) 65%, rgba(17,19,17,.92) 100%), url('https://i.vimeocdn.com/video/2226959222-3bc65664e65a7794da49d7b791e3a1e31f065a5f64cc19d4aacee2983d7ba34f-d_1920x1080?region=us')"><button class="thumb-btn" type="button" id="start-play" aria-label="Play: How to Listen for Maximum Impact"><span class="thumb-num" aria-hidden="true">00</span><span class="play-dot"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="thumb-word">Start here</span></button></div>
       <div class="start-body">
         <span class="kicker">Start here · Watch before Module 1</span>
         <span class="start-title">How to Listen for Maximum Impact</span>
@@ -392,7 +394,7 @@ const START = {
 const MODULES = [
   {
     title: 'Real Fake Thoughts',
-    video: 'https://player.vimeo.com/video/1117496488?h=bd62885e4f&dnt=1',
+    video: 'https://player.vimeo.com/video/1247281908?h=0f64ac2928&dnt=1',
     text: `<p>Maybe the most important principle here is this: <strong>your thoughts are an illusion.</strong></p>
 <p>They aren't real. Or at least they have no reality or meaning until you give them meaning.</p>
 <p>When you step into the world of 'thoughts are an illusion' you move away from positive and negative labels, as it all becomes <em>'thought'</em>. Then you apply different flavours to these thoughts: 'good', 'bad', 'fun', 'sad'.</p>
@@ -407,7 +409,7 @@ const MODULES = [
   },
   {
     title: 'Circumstance vs Experience',
-    video: 'https://player.vimeo.com/video/1116847550?h=0dc2fdea1d&dnt=1',
+    video: 'https://player.vimeo.com/video/1247289260?h=6f671280a8&dnt=1',
     text: `<p>Circumstances you have very little control over. They are, well, circumstances.</p>
 <p>The weather is a circumstance. Man United are a circumstance. Having cancer is a circumstance.</p>
 <p>Your <em>experience</em> of these circumstances? Ah-ha! This is where the game gets interesting.</p>
@@ -664,7 +666,7 @@ function buildPanel(x) {
       <div class="panel-main">${player}
         <div class="notes"><p class="kicker">${label(x)}</p><h2>${x.title}</h2><div class="module-text">${body}</div>${call}</div>
       </div>
-      <aside class="panel-side"><p class="kicker">Your progress</p><span class="watch-slot">${watchButtonHTML(x)}</span>${next}<p class="side-note">${sideNote()}</p>${back}</aside>
+      <aside class="panel-side"><p class="kicker">Your progress</p><span class="watch-slot">${watchButtonHTML(x)}</span>${next}<a class="call-btn" href="${CALL_URL}">Book a call with Shaun &rarr;</a><p class="side-note">${sideNote()}</p>${back}</aside>
     </div>`;
   el.addEventListener('click', e => {
     const b = e.target.closest('[data-act]');
