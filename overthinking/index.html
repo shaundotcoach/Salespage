@@ -69,10 +69,10 @@ h1 span{color:var(--lime);display:block}
 .dark .track{background:var(--graphite)}
 .fill{right:auto;width:calc(var(--v) * 100%);background:var(--lime-deep)}
 .dark .fill{background:var(--lime)}
-.meter.caution .fill{background:#c2410c}
+.meter.caution .fill{background:var(--over-c,#c2410c)}
 .thumb{position:absolute;top:6px;left:calc((100% - var(--thumb)) * var(--v));width:var(--thumb);height:var(--thumb);border-radius:999px;background:var(--ink);border:4px solid var(--lime)}
 .dark .thumb{background:var(--lime);border:0;box-shadow:0 0 0 6px rgba(198,244,50,.18)}
-.meter.caution .thumb{border-color:#c2410c}
+.meter.caution .thumb{border-color:var(--over-c,#c2410c)}
 .slider:focus-visible .thumb{outline:3px solid var(--lime);outline-offset:4px}
 .light .slider:focus-visible .thumb{outline-color:var(--ink)}
 .pulse{position:absolute;inset:0;border-radius:999px;border:2px solid var(--lime);animation:pbPulse 1.6s ease-out infinite;pointer-events:none}
@@ -278,10 +278,21 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
     if (slider.hasAttribute('role')) slider.setAttribute('aria-valuenow', v);
   }
 
+  // Overthinking's colour runs from brand lime (calm, 0) to red (taxing, 100) as it's dragged.
+  var LIME = [198, 244, 50], RED = [194, 65, 12];
+  function overColor(v) {
+    var t = v / 100;
+    var r = Math.round(LIME[0] + (RED[0] - LIME[0]) * t);
+    var g = Math.round(LIME[1] + (RED[1] - LIME[1]) * t);
+    var b = Math.round(LIME[2] + (RED[2] - LIME[2]) * t);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
   function render() {
     paint(peaceMeter, state.peace);
     paint(powerMeter, state.power);
     paint(overMeter, state.overthinking);
+    overMeter.style.setProperty('--over-c', overColor(state.overthinking));
     var p = performance();
     paint(perfMeter, p);
     message.textContent = msg(p);
