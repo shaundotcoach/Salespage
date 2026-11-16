@@ -63,13 +63,16 @@ h1 span{color:var(--lime);display:block}
 /* Slider: phones = horizontal (drag sideways, page still scrolls) */
 .slider{grid-area:track;position:relative;height:44px;margin-top:2px;cursor:grab;touch-action:pan-y;outline:none;-webkit-tap-highlight-color:transparent}
 .slider:active{cursor:grabbing}
+.slider.readout{cursor:default;touch-action:auto}
 .track,.fill{position:absolute;border-radius:999px;left:0;right:0;top:18px;height:8px}
 .track{background:var(--line-light)}
 .dark .track{background:var(--graphite)}
 .fill{right:auto;width:calc(var(--v) * 100%);background:var(--lime-deep)}
 .dark .fill{background:var(--lime)}
+.meter.caution .fill{background:var(--graphite)}
 .thumb{position:absolute;top:6px;left:calc((100% - var(--thumb)) * var(--v));width:var(--thumb);height:var(--thumb);border-radius:999px;background:var(--ink);border:4px solid var(--lime)}
 .dark .thumb{background:var(--lime);border:0;box-shadow:0 0 0 6px rgba(198,244,50,.18)}
+.meter.caution .thumb{border-color:var(--graphite)}
 .slider:focus-visible .thumb{outline:3px solid var(--lime);outline-offset:4px}
 .light .slider:focus-visible .thumb{outline-color:var(--ink)}
 .pulse{position:absolute;inset:0;border-radius:999px;border:2px solid var(--lime);animation:pbPulse 1.6s ease-out infinite;pointer-events:none}
@@ -128,7 +131,7 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
   .page{height:100dvh;min-height:620px;padding:clamp(16px,2.6vh,32px) 32px;gap:clamp(12px,2.2vh,24px)}
   h1{margin:0;font-size:clamp(28px,min(4.4vw,6dvh),48px)}
   h1 span{display:inline}
-  .balance{flex:1 1 auto;min-height:0;max-height:520px;grid-template-columns:minmax(0,1fr) minmax(0,3fr)}
+  .balance{flex:1 1 auto;min-height:0;max-height:520px;grid-template-columns:minmax(0,3fr) minmax(0,1fr)}
   .side{padding:clamp(12px,2.2vh,24px) 8px}
   .side.light{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
   .meter{height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(6px,1.2vh,14px)}
@@ -159,16 +162,6 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
   </header>
 
   <section class="balance" aria-label="Where are you right now?">
-    <div class="side dark">
-      <div class="meter" data-key="overthinking">
-        <div class="m-label" id="l-over">What’s Your Overthinking Level</div>
-        <div class="m-sub">and see its impact on your Peace, Power and Performance</div>
-        <div class="m-num" aria-hidden="true">80</div>
-        <div class="slider" role="slider" tabindex="0" aria-labelledby="l-over" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">
-          <div class="track"></div><div class="fill"></div><div class="thumb"><span class="pulse"></span></div>
-        </div>
-      </div>
-    </div>
     <div class="side light">
       <div class="meter">
         <div class="m-label" id="l-peace">Peace</div>
@@ -186,11 +179,21 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
           <div class="track"></div><div class="fill"></div><div class="thumb"></div>
         </div>
       </div>
-      <div class="meter">
+      <div class="meter caution">
+        <div class="m-label" id="l-over">Overthinking</div>
+        <div class="m-sub">What's taxing the other two</div>
+        <div class="m-num" aria-hidden="true">80</div>
+        <div class="slider" role="slider" tabindex="0" aria-labelledby="l-over" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">
+          <div class="track"></div><div class="fill"></div><div class="thumb"><span class="pulse"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="side dark">
+      <div class="meter" data-key="performance">
         <div class="m-label" id="l-perf">Performance</div>
-        <div class="m-sub">Your performance rises with ease</div>
-        <div class="m-num" aria-hidden="true">20</div>
-        <div class="slider" role="slider" tabindex="0" aria-labelledby="l-perf" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20">
+        <div class="m-sub">A result, not something you drag</div>
+        <div class="m-num" aria-hidden="true">0</div>
+        <div class="slider readout" aria-labelledby="l-perf" aria-live="polite">
           <div class="track"></div><div class="fill"></div><div class="thumb"></div>
         </div>
       </div>
@@ -198,8 +201,8 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
   </section>
 
   <div class="strip" aria-live="polite">
-    <div class="eyebrow" id="strip-label"><span class="hint-v">↕</span><span class="hint-h">↔</span> Drag the sliders</div>
-    <p id="message">Wired, busy, can’t switch off. This isn’t a character flaw – it’s thinking that hasn’t settled yet.</p>
+    <div class="eyebrow"><span class="hint-v">↕</span><span class="hint-h">↔</span> Drag Peace, Power or Overthinking — Performance is only ever the result</div>
+    <p id="message">This is what overthinking costs you, even when some of the peace and power are already there.</p>
   </div>
 
   <section class="signup" id="signup" aria-label="Get the free course">
@@ -236,13 +239,19 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
   var KIT_FORM_ID = '9229059';
   var KIT_FIELD = 'overthinking_score';
 
-  var state = { o: 80, touched: false };
+  // Performance = a computed result, never dragged directly.
+  // Performance = (Peace*0.5 + Power*0.5) - (Overthinking*0.4), floored at 0.
+  var state = { peace: 20, power: 20, overthinking: 80, touched: false };
   var app = document.getElementById('app');
-  var meters = Array.prototype.slice.call(document.querySelectorAll('.meter'));
-  var stripLabel = document.getElementById('strip-label');
+  var stripLabel = document.querySelector('.strip .eyebrow');
   var message = document.getElementById('message');
   var scoreInput = document.getElementById('score');
   var wide = window.matchMedia('(min-width: 720px)');
+
+  var peaceMeter = document.querySelector('[id="l-peace"]').closest('.meter');
+  var powerMeter = document.querySelector('[id="l-power"]').closest('.meter');
+  var overMeter = document.querySelector('[id="l-over"]').closest('.meter');
+  var perfMeter = document.querySelector('[data-key="performance"]');
 
   // Show the right drag arrow for the layout
   var hintStyle = document.createElement('style');
@@ -251,33 +260,39 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
 
   function clamp(v) { return Math.max(0, Math.min(100, Math.round(v))); }
 
-  function msg(o) {
-    if (o >= 70) return 'Wired, busy, can’t switch off. This isn’t a character flaw – it’s thinking that hasn’t settled yet.';
-    if (o >= 40) return 'Getting through the day, but it’s taking more effort than it should.';
-    return 'This is your natural state. The course shows you why it keeps coming back without you forcing it.';
+  function performance() {
+    var raw = state.peace * 0.5 + state.power * 0.5 - state.overthinking * 0.4;
+    return clamp(raw);
+  }
+
+  function msg(p) {
+    if (p >= 85) return 'This is your natural state.';
+    if (p >= 55) return "You're capable of this — most of it's just being spent elsewhere.";
+    return 'This is what overthinking costs you, even when some of the peace and power are already there.';
+  }
+
+  function paint(meter, v) {
+    meter.style.setProperty('--v', v / 100);
+    meter.querySelector('.m-num').textContent = v;
+    var slider = meter.querySelector('.slider');
+    if (slider.hasAttribute('role')) slider.setAttribute('aria-valuenow', v);
   }
 
   function render() {
-    var o = state.o;
-    meters.forEach(function (m, i) {
-      var v = i === 0 ? o : 100 - o;
-      m.style.setProperty('--v', v / 100);
-      m.querySelector('.m-num').textContent = v;
-      m.querySelector('.slider').setAttribute('aria-valuenow', v);
-    });
-    message.textContent = msg(o);
-    scoreInput.value = o;
-    if (state.touched) {
-      app.classList.add('touched');
-      stripLabel.textContent = 'Your Overthinking level ' + o + '/100';
-    }
+    paint(peaceMeter, state.peace);
+    paint(powerMeter, state.power);
+    paint(overMeter, state.overthinking);
+    var p = performance();
+    paint(perfMeter, p);
+    message.textContent = msg(p);
+    scoreInput.value = state.overthinking;
+    if (state.touched) app.classList.add('touched');
   }
 
-  meters.forEach(function (m, i) {
-    var isLeft = i === 0;
-    var el = m.querySelector('.slider');
+  function bindSlider(meter, key) {
+    var el = meter.querySelector('.slider');
     function set(v) {
-      state.o = clamp(isLeft ? v : 100 - v);
+      state[key] = clamp(v);
       state.touched = true;
       render();
     }
@@ -315,12 +330,16 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
     el.addEventListener('pointercancel', function () { dragging = false; });
     el.addEventListener('keydown', function (e) {
       var steps = { ArrowUp: 5, ArrowRight: 5, ArrowDown: -5, ArrowLeft: -5, PageUp: 10, PageDown: -10 };
-      var cur = isLeft ? state.o : 100 - state.o;
-      if (e.key in steps) { e.preventDefault(); set(cur + steps[e.key]); }
+      if (e.key in steps) { e.preventDefault(); set(state[key] + steps[e.key]); }
       else if (e.key === 'Home') { e.preventDefault(); set(0); }
       else if (e.key === 'End') { e.preventDefault(); set(100); }
     });
-  });
+  }
+
+  bindSlider(peaceMeter, 'peace');
+  bindSlider(powerMeter, 'power');
+  bindSlider(overMeter, 'overthinking');
+  // Performance's .slider is deliberately not bound — it's a readout, never a drag target.
 
   // Sign-up → Kit
   var form = document.getElementById('form');
@@ -332,7 +351,7 @@ figcaption{margin-top:6px;font-size:14px;color:var(--grey-400)}
     var fd = new FormData();
     fd.append('email_address', email);
     fd.append('first_name', name);
-    fd.append('fields[' + KIT_FIELD + ']', String(state.o));
+    fd.append('fields[' + KIT_FIELD + ']', String(state.overthinking));
     form.querySelector('button').disabled = true;
     fetch('https://app.kit.com/forms/' + KIT_FORM_ID + '/subscriptions', { method: 'POST', body: fd, mode: 'no-cors' })
       .catch(function () {})
