@@ -89,6 +89,8 @@
   .start-letter { align-self: flex-start; padding: 0; border: 0; background: none; font: inherit; font-size: 15px; font-weight: 800; color: var(--ink); text-decoration: underline; text-decoration-color: var(--lime); text-decoration-thickness: 3px; text-underline-offset: 5px; cursor: pointer; }
   .thumb { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 9; background: var(--ink); overflow: hidden; }
   .thumb-num { position: absolute; right: -12px; bottom: -56px; font-size: 260px; font-weight: 900; line-height: 1; letter-spacing: -.04em; color: #1d211d; }
+  .thumb.has-poster { background-size: cover; background-position: center; }
+  .thumb.has-poster .thumb-num { display: none; }
   .thumb-word { position: absolute; left: 24px; bottom: 18px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--lime); }
   .play-dot { position: relative; display: flex; align-items: center; justify-content: center; width: 76px; height: 76px; border-radius: 50%; background: var(--lime); color: var(--ink); }
   .play-dot svg { margin-left: 4px; }
@@ -310,7 +312,7 @@
 
   <div id="start-wrap">
     <div class="start" data-id="start">
-      <div class="thumb" id="start-media"><button class="thumb-btn" type="button" id="start-play" aria-label="Play: How to Listen for Maximum Impact"><span class="thumb-num" aria-hidden="true">00</span><span class="play-dot"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="thumb-word">Start here</span></button></div>
+      <div class="thumb has-poster" id="start-media" style="background-image: linear-gradient(180deg, rgba(17,19,17,0) 40%, rgba(17,19,17,.78) 100%), url('https://i.vimeocdn.com/video/2226959222-3bc65664e65a7794da49d7b791e3a1e31f065a5f64cc19d4aacee2983d7ba34f-d_1920x1080?region=us')"><button class="thumb-btn" type="button" id="start-play" aria-label="Play: How to Listen for Maximum Impact"><span class="thumb-num" aria-hidden="true">00</span><span class="play-dot"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="thumb-word">Start here</span></button></div>
       <div class="start-body">
         <span class="kicker">Start here · Watch before Module 1</span>
         <span class="start-title">How to Listen for Maximum Impact</span>
