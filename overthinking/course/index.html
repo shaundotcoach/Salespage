@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>F-Overthinking: Free Mini Course | shaun.coach</title>
-<meta name="description" content="A free mini course to take you from overthinking to peace, power and performance. 10 short video modules, each under 3½ minutes, plus a bonus library.">
+<meta name="description" content="A free mini course to take you from overthinking to peace, power and performance. 10 short video modules, each under 10 minutes, plus a bonus library.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#111311">
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -135,7 +135,10 @@
   .bonus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
   .bcard { display: flex; align-items: center; gap: 16px; min-height: 92px; padding: 14px; background: #fff; border: 2px solid var(--ink); border-radius: var(--r-lg); text-align: left; font: inherit; color: var(--ink); cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; scroll-margin-top: 16px; }
   .bcard:hover { transform: translateY(-2px); box-shadow: 6px 6px 0 var(--lime); }
-  .bthumb { display: flex; align-items: center; justify-content: center; flex: 0 0 104px; aspect-ratio: 16 / 9; background: var(--ink); color: var(--lime); border-radius: var(--r-sm); font-weight: 900; font-size: 20px; letter-spacing: -.02em; }
+  .bthumb { position: relative; display: flex; align-items: center; justify-content: center; flex: 0 0 104px; aspect-ratio: 16 / 9; background: var(--ink); background-size: cover; background-position: center; color: var(--lime); border-radius: var(--r-sm); font-weight: 900; font-size: 20px; letter-spacing: -.02em; overflow: hidden; }
+  .bthumb.has-poster { color: transparent; }
+  .bthumb .bnum { position: absolute; left: 6px; bottom: 4px; font-size: 11px; font-weight: 900; letter-spacing: -.02em; color: var(--lime); }
+  .bthumb:not(.has-poster) .bnum { position: static; font-size: 20px; }
   .btext { flex: 1; min-width: 0; }
   .btitle { display: block; font-weight: 700; font-size: 16px; line-height: 1.25; }
   .bfoot { display: block; margin-top: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--mute); }
@@ -269,7 +272,7 @@
     <a href="https://shaun.coach" class="site-logo" aria-label="shaun.coach home">
       <svg width="182" height="29" viewBox="0 0 182 29" fill="none" role="img" aria-label="shaun.coach"> <g clip-path="url(#clip0_1379_82)"> <path d="M23.1825 6.15422C23.2021 6.16994 23.2217 6.18512 23.2411 6.20084L25.0671 4.37517C20.3175 -0.37367 13.5489 -1.30522 9.94841 2.29465C9.31554 2.92742 8.82419 3.65834 8.4679 4.45868C9.85786 4.27865 11.3519 4.36813 12.839 4.72654L13.6871 4.93095C16.0565 3.19148 19.7584 3.59056 22.791 5.8495L21.0139 7.62638C23.7964 10.9947 24.1881 15.3624 21.7764 17.7736C21.5529 17.997 21.3127 18.196 21.0578 18.3717C20.5176 16.1291 19.2996 13.8522 17.4487 11.8861C17.4682 11.9018 17.4877 11.9176 17.5072 11.9338L19.3332 10.1081C17.2892 8.06448 14.8716 6.73007 12.4935 6.15747C10.9241 5.77955 9.37247 5.73345 7.95595 6.0371C6.53074 6.34237 5.24273 6.99955 4.21395 8.02817C0.701907 11.5396 1.50291 18.0648 5.95209 22.7909C5.93256 22.7752 5.91304 22.7601 5.89352 22.7443L4.06754 24.5699C8.81714 29.3188 15.5858 30.2498 19.1863 26.6506C19.8191 26.0177 20.3105 25.2867 20.6668 24.4864C19.2768 24.6665 17.7827 24.5771 16.2957 24.2186L15.4475 24.0142C13.0781 25.7536 9.37627 25.3545 6.34363 23.0956L8.12082 21.3186C5.33819 17.9504 4.94663 13.5828 7.3583 11.1715C7.58174 10.9481 7.822 10.7491 8.07689 10.5734C8.61702 12.8161 9.83506 15.0929 11.686 17.059C11.6665 17.0432 11.647 17.0275 11.6274 17.0113L9.80145 18.8369C11.8454 20.8806 14.2631 22.215 16.6412 22.7876C18.2106 23.1657 19.7622 23.2116 21.1787 22.9079C22.6039 22.6028 23.892 21.9456 24.9207 20.9169C28.4327 17.4055 27.6318 10.8803 23.1825 6.15422ZM12.0776 17.3626L13.8553 15.5852C12.3167 13.7226 11.5108 11.5554 11.5038 9.58218C13.3211 9.5887 15.3022 10.2724 17.0587 11.5814L15.281 13.3588C16.8196 15.2214 17.6255 17.3887 17.6325 19.3618C15.8152 19.3553 13.8341 18.6716 12.0776 17.3626Z" fill="currentColor"></path> </g> <path d="M39.6682 22.8104C37.3976 22.8104 35.5256 22.0218 34.0522 20.4444L36.4182 18.2864C37.4062 19.3958 38.4636 19.9504 39.5902 19.9504C40.1969 19.9504 40.6562 19.8204 40.9682 19.5604C41.2976 19.2831 41.4622 18.9451 41.4622 18.5464C41.4622 18.3038 41.4016 18.0958 41.2802 17.9224C41.1762 17.7491 40.9422 17.5844 40.5782 17.4284C40.2316 17.2724 39.7029 17.1164 38.9922 16.9604C37.7789 16.6658 36.8776 16.3018 36.2882 15.8684C35.6989 15.4351 35.3089 14.9498 35.1182 14.4124C34.9276 13.8751 34.8322 13.3204 34.8322 12.7484C34.8322 11.5698 35.2742 10.5904 36.1582 9.81043C37.0596 9.0131 38.2989 8.61443 39.8762 8.61443C40.9682 8.61443 41.9042 8.7791 42.6842 9.10843C43.4642 9.43777 44.2009 10.0531 44.8942 10.9544L42.3462 12.9044C42.0169 12.3844 41.6442 12.0118 41.2282 11.7864C40.8296 11.5611 40.4049 11.4484 39.9542 11.4484C39.4689 11.4484 39.0616 11.5438 38.7322 11.7344C38.4202 11.9251 38.2642 12.2284 38.2642 12.6444C38.2642 12.8698 38.3682 13.0951 38.5762 13.3204C38.7842 13.5284 39.2869 13.7364 40.0842 13.9444C41.4016 14.2738 42.4069 14.6638 43.1002 15.1144C43.7936 15.5478 44.2702 16.0418 44.5302 16.5964C44.7902 17.1511 44.9202 17.7664 44.9202 18.4424C44.9202 19.2744 44.6862 20.0198 44.2182 20.6784C43.7676 21.3371 43.1436 21.8571 42.3462 22.2384C41.5662 22.6198 40.6736 22.8104 39.6682 22.8104Z" fill="currentColor"></path> <path d="M46.2883 22.4724V3.49243H49.7983V10.8244C50.5263 9.36843 51.887 8.64043 53.8803 8.64043C54.851 8.64043 55.7263 8.86577 56.5063 9.31643C57.2863 9.7671 57.9016 10.4084 58.3523 11.2404C58.803 12.0724 59.0283 13.0604 59.0283 14.2044V22.4724H55.5183V15.0624C55.5183 13.8838 55.2496 13.0344 54.7123 12.5144C54.175 11.9771 53.473 11.7084 52.6063 11.7084C51.861 11.7084 51.2023 11.9771 50.6303 12.5144C50.0756 13.0344 49.7983 13.8838 49.7983 15.0624V22.4724H46.2883Z" fill="currentColor"></path> <path d="M67.1515 22.8104C65.9208 22.8104 64.7941 22.4984 63.7715 21.8744C62.7661 21.2331 61.9601 20.3838 61.3535 19.3264C60.7641 18.2518 60.4695 17.0644 60.4695 15.7644C60.4695 14.7938 60.6428 13.8838 60.9895 13.0344C61.3361 12.1678 61.8128 11.4138 62.4195 10.7724C63.0261 10.1138 63.7281 9.60243 64.5255 9.23843C65.3401 8.8571 66.2155 8.66643 67.1515 8.66643C68.3301 8.66643 69.2488 8.89176 69.9075 9.34243C70.5661 9.77576 71.0775 10.3564 71.4415 11.0844V8.95243H74.9255V22.4724H71.5195V20.2624C71.1555 21.0251 70.6355 21.6404 69.9595 22.1084C69.3008 22.5764 68.3648 22.8104 67.1515 22.8104ZM67.7235 19.6384C68.5035 19.6384 69.1708 19.4651 69.7255 19.1184C70.2975 18.7544 70.7395 18.2778 71.0515 17.6884C71.3635 17.0991 71.5195 16.4578 71.5195 15.7644C71.5195 15.0538 71.3635 14.4038 71.0515 13.8144C70.7395 13.2251 70.2975 12.7484 69.7255 12.3844C69.1708 12.0204 68.5035 11.8384 67.7235 11.8384C66.9781 11.8384 66.3195 12.0204 65.7475 12.3844C65.1928 12.7311 64.7595 13.1991 64.4475 13.7884C64.1355 14.3778 63.9795 15.0278 63.9795 15.7384C63.9795 16.4144 64.1355 17.0558 64.4475 17.6624C64.7595 18.2518 65.1928 18.7284 65.7475 19.0924C66.3195 19.4564 66.9781 19.6384 67.7235 19.6384Z" fill="currentColor"></path> <path d="M82.0289 22.7844C81.0583 22.7844 80.183 22.5591 79.403 22.1084C78.623 21.6578 78.0076 21.0164 77.5569 20.1844C77.1063 19.3351 76.881 18.3471 76.881 17.2204V8.95243H80.3909V16.3624C80.3909 17.5238 80.6249 18.3731 81.0929 18.9104C81.5609 19.4478 82.2283 19.7164 83.0949 19.7164C83.8403 19.7164 84.4903 19.4478 85.0449 18.9104C85.6169 18.3731 85.903 17.5238 85.903 16.3624V8.95243H89.4129V22.4724H86.007V20.4444C85.6776 21.2244 85.1923 21.8138 84.5509 22.2124C83.9269 22.5938 83.0863 22.7844 82.0289 22.7844Z" fill="currentColor"></path> <path d="M91.4836 22.4724V8.95243H94.9416V10.9284C95.6523 9.4031 97.0303 8.64043 99.0756 8.64043C100.046 8.64043 100.922 8.86577 101.702 9.31643C102.482 9.7671 103.097 10.4084 103.548 11.2404C103.998 12.0724 104.224 13.0604 104.224 14.2044V22.4724H100.714V15.0624C100.714 13.8838 100.445 13.0344 99.9076 12.5144C99.3703 11.9771 98.6683 11.7084 97.8016 11.7084C97.0563 11.7084 96.3976 11.9771 95.8256 12.5144C95.2709 13.0344 94.9936 13.8838 94.9936 15.0624V22.4724H91.4836Z" fill="currentColor"></path> <path d="M108.057 22.8104C107.381 22.8104 106.817 22.5851 106.367 22.1344C105.933 21.6838 105.717 21.1464 105.717 20.5224C105.717 19.9158 105.933 19.3871 106.367 18.9364C106.817 18.4858 107.381 18.2604 108.057 18.2604C108.733 18.2604 109.287 18.4858 109.721 18.9364C110.154 19.3871 110.371 19.9158 110.371 20.5224C110.371 21.1464 110.154 21.6838 109.721 22.1344C109.287 22.5851 108.733 22.8104 108.057 22.8104Z" fill="currentColor"></path> <path d="M117.914 22.8104C116.943 22.8104 116.033 22.6284 115.184 22.2644C114.352 21.9004 113.615 21.3978 112.974 20.7564C112.333 20.0978 111.83 19.3438 111.466 18.4944C111.119 17.6278 110.946 16.7004 110.946 15.7124C110.946 14.3951 111.249 13.2078 111.856 12.1504C112.48 11.0758 113.329 10.2178 114.404 9.57643C115.496 8.9351 116.727 8.61443 118.096 8.61443C119.327 8.5971 120.427 8.81376 121.398 9.26443C122.369 9.7151 123.14 10.3391 123.712 11.1364L121.008 13.3464C120.696 12.8784 120.289 12.5058 119.786 12.2284C119.301 11.9511 118.755 11.8124 118.148 11.8124C117.403 11.8124 116.753 11.9944 116.198 12.3584C115.643 12.7051 115.21 13.1731 114.898 13.7624C114.603 14.3518 114.456 15.0018 114.456 15.7124C114.456 16.4058 114.612 17.0558 114.924 17.6624C115.253 18.2518 115.695 18.7284 116.25 19.0924C116.822 19.4391 117.481 19.6124 118.226 19.6124C118.902 19.6124 119.474 19.4651 119.942 19.1704C120.41 18.8584 120.817 18.4684 121.164 18.0004L123.712 20.2104C123.071 21.0251 122.273 21.6664 121.32 22.1344C120.384 22.5851 119.249 22.8104 117.914 22.8104Z" fill="currentColor"></path> <path d="M130.92 22.8104C129.533 22.8104 128.294 22.4898 127.202 21.8484C126.11 21.2071 125.252 20.3578 124.628 19.3004C124.021 18.2258 123.718 17.0384 123.718 15.7384C123.718 14.4384 124.021 13.2511 124.628 12.1764C125.252 11.1018 126.11 10.2438 127.202 9.60243C128.294 8.9611 129.533 8.64043 130.92 8.64043C132.324 8.64043 133.563 8.9611 134.638 9.60243C135.73 10.2438 136.579 11.1018 137.186 12.1764C137.81 13.2511 138.122 14.4384 138.122 15.7384C138.122 17.0384 137.81 18.2258 137.186 19.3004C136.579 20.3578 135.73 21.2071 134.638 21.8484C133.563 22.4898 132.324 22.8104 130.92 22.8104ZM130.92 19.6124C131.665 19.6124 132.315 19.4391 132.87 19.0924C133.424 18.7284 133.849 18.2518 134.144 17.6624C134.456 17.0731 134.612 16.4318 134.612 15.7384C134.612 15.0278 134.456 14.3778 134.144 13.7884C133.849 13.1991 133.424 12.7311 132.87 12.3844C132.315 12.0204 131.665 11.8384 130.92 11.8384C130.174 11.8384 129.524 12.0204 128.97 12.3844C128.415 12.7311 127.982 13.1991 127.67 13.7884C127.375 14.3778 127.228 15.0278 127.228 15.7384C127.228 16.4318 127.375 17.0731 127.67 17.6624C127.982 18.2518 128.415 18.7284 128.97 19.0924C129.524 19.4391 130.174 19.6124 130.92 19.6124Z" fill="currentColor"></path> <path d="M145.71 22.8104C144.479 22.8104 143.353 22.4984 142.33 21.8744C141.325 21.2331 140.519 20.3838 139.912 19.3264C139.323 18.2518 139.028 17.0644 139.028 15.7644C139.028 14.7938 139.201 13.8838 139.548 13.0344C139.895 12.1678 140.371 11.4138 140.978 10.7724C141.585 10.1138 142.287 9.60243 143.084 9.23843C143.899 8.8571 144.774 8.66643 145.71 8.66643C146.889 8.66643 147.807 8.89176 148.466 9.34243C149.125 9.77576 149.636 10.3564 150 11.0844V8.95243H153.484V22.4724H150.078V20.2624C149.714 21.0251 149.194 21.6404 148.518 22.1084C147.859 22.5764 146.923 22.8104 145.71 22.8104ZM146.282 19.6384C147.062 19.6384 147.729 19.4651 148.284 19.1184C148.856 18.7544 149.298 18.2778 149.61 17.6884C149.922 17.0991 150.078 16.4578 150.078 15.7644C150.078 15.0538 149.922 14.4038 149.61 13.8144C149.298 13.2251 148.856 12.7484 148.284 12.3844C147.729 12.0204 147.062 11.8384 146.282 11.8384C145.537 11.8384 144.878 12.0204 144.306 12.3844C143.751 12.7311 143.318 13.1991 143.006 13.7884C142.694 14.3778 142.538 15.0278 142.538 15.7384C142.538 16.4144 142.694 17.0558 143.006 17.6624C143.318 18.2518 143.751 18.7284 144.306 19.0924C144.878 19.4564 145.537 19.6384 146.282 19.6384Z" fill="currentColor"></path> <path d="M162.018 22.8104C161.047 22.8104 160.137 22.6284 159.288 22.2644C158.456 21.9004 157.719 21.3978 157.078 20.7564C156.436 20.0978 155.934 19.3438 155.57 18.4944C155.223 17.6278 155.05 16.7004 155.05 15.7124C155.05 14.3951 155.353 13.2078 155.96 12.1504C156.584 11.0758 157.433 10.2178 158.508 9.57643C159.6 8.9351 160.83 8.61443 162.2 8.61443C163.43 8.5971 164.531 8.81376 165.502 9.26443C166.472 9.7151 167.244 10.3391 167.816 11.1364L165.112 13.3464C164.8 12.8784 164.392 12.5058 163.89 12.2284C163.404 11.9511 162.858 11.8124 162.252 11.8124C161.506 11.8124 160.856 11.9944 160.302 12.3584C159.747 12.7051 159.314 13.1731 159.002 13.7624C158.707 14.3518 158.56 15.0018 158.56 15.7124C158.56 16.4058 158.716 17.0558 159.028 17.6624C159.357 18.2518 159.799 18.7284 160.354 19.0924C160.926 19.4391 161.584 19.6124 162.33 19.6124C163.006 19.6124 163.578 19.4651 164.046 19.1704C164.514 18.8584 164.921 18.4684 165.268 18.0004L167.816 20.2104C167.174 21.0251 166.377 21.6664 165.424 22.1344C164.488 22.5851 163.352 22.8104 162.018 22.8104Z" fill="currentColor"></path> <path d="M169.204 22.4724V3.49243H172.714V10.8244C173.442 9.36843 174.803 8.64043 176.796 8.64043C177.767 8.64043 178.642 8.86577 179.422 9.31643C180.202 9.7671 180.818 10.4084 181.268 11.2404C181.719 12.0724 181.944 13.0604 181.944 14.2044V22.4724H178.434V15.0624C178.434 13.8838 178.166 13.0344 177.628 12.5144C177.091 11.9771 176.389 11.7084 175.522 11.7084C174.777 11.7084 174.118 11.9771 173.546 12.5144C172.992 13.0344 172.714 13.8838 172.714 15.0624V22.4724H169.204Z" fill="currentColor"></path> <defs> <clipPath id="clip0_1379_82"> <rect width="29" height="29" fill="white"></rect> </clipPath> </defs> </svg>
     </a>
-    <a class="btn-lime nav-call" id="nav-call" href="/bookcall/?src=course" hidden>Book a call<span class="long">with Shaun</span></a>
+    <a class="btn-lime nav-call" id="nav-call" href="/bookcall/?src=course" hidden target="_blank" rel="noopener">Book a call<span class="long">with Shaun</span></a>
   </div>
 </nav>
 
@@ -372,23 +375,17 @@ const START = {
   text: `<div class="callout">
   Before you begin, this course will make the most sense if you work through the modules in order, since the concepts stack. That being said, if you'd rather rip into what catches your eye please do.
 </div>
-<p>👌 Ah-ha! Welcome to this super short course built for you. Designed to help you stop feeling overwhelmed, reduce stress, and pull you out of the malaise of middle age (if you're there).</p>
-<p>When you believe your own thinking, you are at its mercy. It's easier to fall into the trap of thinking <em>'things out there can impact how I am feeling in here.'</em></p>
-<p>The principles in this course have allowed me to navigate five cancer diagnoses, well, four when you factor in I learned a lot of this because of the first diagnosis. BUT, if they worked for me when I was due to have my jaw ripped out and rebuilt with a bone from my leg, I am confident they'll work for you too.</p>
-<p>It doesn't matter if you're a CEO, in sales, working from home, junior staff, director level or setting up your own business — <strong>if you're a human, this will help you.</strong></p>
-<p>The goal of this mini-course is to give you the tools, tips and understanding to spot when your mind is being <em>unhelpful (for want of a stronger word)</em> and for you to live your life, on your terms.</p>
-<p>And not on the terms of the tyrant within.</p>
+<p>Welcome.</p>
+<p>This course is built for you to go through in your own time, or binge it all at once — the choice is yours.</p>
+<p>If you haven't got your welcome email, check your spam folder — that's where you'll get your link for lifetime access, plus a daily email pacing you through each module.</p>
+<p>If you were sent this course and would like it emailed to you for lifetime access, you can <a href="https://shaun.coach/overthinking">sign up here</a>.</p>
+<p>For maximum impact in the modules that follow, can you bring your highest level of listening? That is: <em>'if you paid £500 for this course, how would you go through it?'</em> — can you listen for what may be helpful if applied, versus listening to see if you agree or disagree with an idea that's been shared?</p>
 <hr>
-<p><strong>The evil scheme.</strong> Okay, I'll lay it on you straight. Here's my honest and true reason for this 'f-overthinking' mini-series:</p>
-<ol>
-  <li>First and foremost, to help you if your mind calls the shots when it comes to your thinking. Basically make you top dog in your own life again. Everyone deserves peace from their mind, and I PROMISE you, it's easier than you've been told.</li>
-  <li>I hope you take so much value from the course and the twice weekly emails that you book a coaching call with me to see if there might be a fit in working together 1-1, or you book me to speak at your event or organisation.</li>
-</ol>
-<p>I learned a really cunning trick a while back that has changed my life and business for the better… It's the old <em>'show you can help people by actually helping them'</em> trick.</p>
-<p>Oldest one in the book.</p>
-<p>Now that my evil scheme has been revealed… ready? Let's begin.</p>
+<p>As you work through this course, you may come across topics you'd like to discuss in more detail. You can book a call for a coaching session with me, or email me at <a href="mailto:hey@shaun.coach" target="_blank" rel="noopener">hey@shaun.coach</a>.</p>
+<p>I hope you take as much from these concepts and principles as I have.</p>
+<p>Let's begin.</p>
 <p class="sign-off">Shaun</p>
-<p class="small">PS — each video is no more than 3 mins 30 seconds for your viewing pleasure.</p>`
+<p class="small">PS — no video is over 10 minutes, making them highly digestible.</p>`
 };
 
 const MODULES = [
@@ -430,7 +427,7 @@ const MODULES = [
   },
   {
     title: 'Feelings are a Thermostat for Your Thinking',
-    video: 'https://player.vimeo.com/video/1117033922?h=4695427eab&dnt=1',
+    video: 'https://player.vimeo.com/video/1247303542?h=1d3f5f23a8&dnt=1',
     text: `<p>The problem with feelings is they feel so damned real. They sneak up on you and cause you to believe you <em>are</em> the feeling you're experiencing.</p>
 <p>'I am sad.' 'I am depressed.' 'I am overwhelmed.'</p>
 <p><strong>NO!!</strong> You are none of these things. No more than I was cancer when I had it.</p>
@@ -445,7 +442,7 @@ const MODULES = [
   },
   {
     title: "What This Process Isn't",
-    video: 'https://player.vimeo.com/video/1117096381?h=6965681956&dnt=1',
+    video: 'https://player.vimeo.com/video/1247310682?h=99873b4d49&dnt=1',
     text: `<p>When you start seeing that your experience comes from your thinking about events, rather than the events themselves, it can occasionally be easy to conclude:</p>
 <div class="callout"><em>'Because my experience comes from my thinking, this opens the door for people to walk all over me, because they don't have the power to make me feel anything, as it's my own thinking causing the hurt.'</em></div>
 <p>This couldn't be further from the truth.</p>
@@ -458,7 +455,7 @@ const MODULES = [
   },
   {
     title: 'Letting Thoughts Settle &amp; Your Inner Wisdom',
-    video: 'https://player.vimeo.com/video/1117139600?h=892ac7a6bf&dnt=1',
+    video: 'https://player.vimeo.com/video/1247566015?h=d72f35f15e&dnt=1',
     text: `<p>If I gave you a bottle with a beautiful mix of dirt and water in it and asked you to shake it up. Then asked you to keep shaking the bottle to the point where the water becomes clear.</p>
 <p>The harder you shake, the louder I shout <em>'KEEP SHAKING DAMN IT'</em> — the more cloudy the water gets.</p>
 <p>The only way for the water to become clear is to <strong>put the bottle down.</strong> To let it settle.</p>
@@ -471,7 +468,7 @@ const MODULES = [
   },
   {
     title: 'Being Human',
-    video: 'https://player.vimeo.com/video/1117148983?h=4087fd6530&dnt=1',
+    video: 'https://player.vimeo.com/video/1247574617?h=6b5eb6dd27&dnt=1',
     text: `<p>There are many things I can help with.</p>
 <p>You being a human isn't one of them.</p>
 <p>Are you in dire need of 'fixing' or are you acting like a regular, normal human?</p>
@@ -479,7 +476,7 @@ const MODULES = [
   },
   {
     title: 'Put the Weight Down',
-    video: 'https://player.vimeo.com/video/1117387739?h=6a8d38a846&dnt=1',
+    video: 'https://player.vimeo.com/video/1247580079?h=0dc32e6f97&dnt=1',
     text: `<p>The usual language around 'changing thought' goes like:</p>
 <div class="callout">
   'I need to battle my thinking'<br>
@@ -499,7 +496,7 @@ const MODULES = [
   },
   {
     title: 'The Power of These Tools',
-    video: 'https://player.vimeo.com/video/1117394751?h=55ebd52163&dnt=1',
+    video: 'https://player.vimeo.com/video/1247588351?h=4d5e6a3e8b&dnt=1',
     text: `<p>If this is your first time coming across some of these principles they may seem a little too easy. A little too <em>'that's fine for you Shaun, but MYYYY thinking is REAL.'</em></p>
 <p>Don't be bringing that talk here.</p>
 <p>I am not here to try and change your thinking. Only you can do that. I am here to question your thinking, to challenge it. To poke and prod it and see how your stories hold up under examination. Or more specifically to help you understand it.</p>
@@ -510,7 +507,7 @@ const MODULES = [
   },
   {
     title: 'For High Performance',
-    video: 'https://player.vimeo.com/video/1117544801?h=9b801cff41&dnt=1',
+    video: 'https://player.vimeo.com/video/1247604822?h=6d9acec290&dnt=1',
     text: `<p>There's a strange paradox which comes up when you allow your busy, thinking mind to settle.</p>
 <p>You tap into the inner wisdom that's available to us all, when you're open to it.</p>
 <p>That wisdom doesn't worry about messaging strangers, or making content, or being assertive where it needs to be. Doesn't worry about asking for more money, or doing the work that needs doing.</p>
@@ -523,19 +520,31 @@ const MODULES = [
   },
   {
     title: 'What Now?',
-    video: null,
+    video: 'https://player.vimeo.com/video/1247595912?h=cf3d500ad9&dnt=1',
     text: `<p>Now your life is yours to live on your terms! The future is yours for the taking.</p>
 <p>But if you mean <em>where are you supposed to go with this journey?</em> — here's your next step:</p>
 <div class="cta-block">
-  <a href="/bookcall/?src=course" class="btn-lime cta-btn cta-btn-primary">Book a Coaching Call with Shaun</a>
+  <a href="/bookcall/?src=course" class="btn-lime cta-btn cta-btn-primary" target="_blank" rel="noopener">Book a Coaching Call with Shaun</a>
 </div>
 <p>Congratulations on giving yourself this time — and see you over on the weekly emails.</p>
 <p class="sign-off">Shaun ❤️</p>`
   }
 ];
 
-// TODO: bonus library. Fill in each title and Vimeo link as they're finalised.
-const BONUS = Array.from({ length: 9 }, (_, i) => ({ title: 'Bonus video ' + (i + 1), video: '', text: '' }));
+// TODO: bonus library notes/text still to be written for each one.
+const BONUS = [
+  { title: 'Accept or Change', video: 'https://player.vimeo.com/video/1247635168?h=cde64c9045&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227466923-60666f415a16ebf83a4d1eec020f47dd0f2647f012a69a31bfb56d0a9cb7a3fa-d_640x360?region=us', text: '' },
+  { title: 'Now or Not Now', video: 'https://player.vimeo.com/video/1247635166?h=a8de7fef49&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227466726-daf279828e092ccb557adb4f9347bcbf473a51e02df9341ff726d68a3ee1fdd2-d_640x360?region=us', text: '' },
+  { title: 'Raise or Lower Self Esteem', video: 'https://player.vimeo.com/video/1247635169?h=4e11982285&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227466757-8f74da8b2becc49c881cb1366b4d3a3048c57314939fdcf6ed580161dbb562c1-d_640x360?region=us', text: '' },
+  { title: 'Gratitude', video: 'https://player.vimeo.com/video/1247635167?h=694833639d&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227466709-b0437894d04186c04f214a610310e72c7cd01d443b99f07f29f32e849717a229-d_640x360?region=us', text: '' },
+  { title: 'If I Acted More Responsible', video: 'https://player.vimeo.com/video/1247643977?h=59d469dd71&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227477945-d65ad3b8c286ec49cb487e067704d753fe01b51f26aab66b1ffa69dd0293bec7-d_640x360?region=us', text: '' },
+  { title: 'Imposter Syndrome', video: 'https://player.vimeo.com/video/1247643976?h=183a129e89&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227477837-ebd62d0758b018a6f37d9323329353e13fae2ad0d8afed296ff34f58e839b2a8-d_640x360?region=us', text: '' },
+  { title: 'Deeply Held Beliefs', video: 'https://player.vimeo.com/video/1247643979?h=e4eea71d19&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227477756-7a4b2c2218ee216261777c15e772c468bbd596b750673cc28c71523d8f96bf96-d_640x360?region=us', text: '' },
+  { title: 'Getting Physical', video: 'https://player.vimeo.com/video/1247643978?h=fb6b16762a&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227477732-5034960285affc84f7019782ac69a640fb0f9d134c16b974664748917d0a3d8b-d_640x360?region=us', text: '' },
+  { title: 'Optimising', video: 'https://player.vimeo.com/video/1247644252?h=c1cd6f190f&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227478130-31ee69d9eea99353e6fbaffc28a26640125b2078118d4410bb028a2dd7824525-d_640x360?region=us', text: '' },
+  { title: 'The Ladder', video: 'https://player.vimeo.com/video/1247644274?h=ede13cfcf7&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227478307-8edbdcf19c5046463884b9eff42daa7add1c1c795e9e6897e08167ca3c63aa84-d_640x360?region=us', text: '' },
+  { title: 'Content', video: 'https://player.vimeo.com/video/1247644304?h=38e3cdc501&dnt=1', thumb: 'https://i.vimeocdn.com/video/2227478158-43cceffab856931346b190429f595ed2a6c9acc38088a5da5b1a64ab57c66cd1-d_640x360?region=us', text: '' },
+];
 
 // Modules that end with a "book a call" line
 const CALL_AFTER = [3, 6, 9];
@@ -557,7 +566,7 @@ try { watched = JSON.parse(store.get('fo-watched') || '{}') || {}; } catch (e) {
 // ── Everything on the page, by id ─────────────────────────────────
 const items = [{ id: 'start', kind: 'start', n: 0, num: '00', title: START.title, video: START.video, text: START.text }];
 MODULES.forEach((m, i) => items.push({ id: 'm' + (i + 1), kind: 'module', n: i + 1, num: String(i + 1).padStart(2, '0'), title: m.title, video: m.video, text: m.text, call: CALL_AFTER.includes(i + 1) }));
-BONUS.forEach((b, i) => items.push({ id: 'b' + (i + 1), kind: 'bonus', n: i + 1, num: 'B' + (i + 1), title: b.title, video: b.video, text: b.text }));
+BONUS.forEach((b, i) => items.push({ id: 'b' + (i + 1), kind: 'bonus', n: i + 1, num: 'B' + (i + 1), title: b.title, video: b.video, thumb: b.thumb, text: b.text }));
 const byId = {};
 items.forEach(x => { byId[x.id] = x; });
 const modules = items.filter(x => x.kind === 'module');
@@ -606,12 +615,16 @@ function buildCards() {
       <span class="card-title">${x.title}</span>
       <span class="card-foot"></span>
     </button>`).join('');
-  $('bonus-grid').innerHTML = bonus.map(x =>
-    `<button class="bcard" type="button" data-id="${x.id}" id="card-${x.id}">
-      <span class="bthumb">${x.num}</span>
+  $('bonus-grid').innerHTML = bonus.map(x => {
+    const posterStyle = x.thumb
+      ? ` has-poster" style="background-image: linear-gradient(180deg, rgba(17,19,17,.05) 0%, rgba(17,19,17,.25) 55%, rgba(17,19,17,.85) 100%), url('${x.thumb}')`
+      : '"';
+    return `<button class="bcard" type="button" data-id="${x.id}" id="card-${x.id}">
+      <span class="bthumb${posterStyle}><span class="bnum">${x.num}</span></span>
       <span class="btext"><span class="btitle">${x.title}</span><span class="bfoot"></span></span>
       <span class="badge"></span>
-    </button>`).join('');
+    </button>`;
+  }).join('');
   document.querySelector('.start').id = 'card-start';
 }
 
@@ -654,7 +667,7 @@ function buildPanel(x) {
   else if (x.video) player = `<div class="dock"><div class="player"><iframe src="${x.video}" title="${label(x)}: ${x.title.replace(/&amp;/g, '&')}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>`;
   else if (x.kind !== 'module') player = '<div class="dock"><div class="player player-empty"><span>Video coming soon</span></div></div>';
   const body = x.text || '<p>Notes for this video are on their way.</p>';
-  const call = x.call ? `<p class="call-line">Want to talk this through properly? <a href="${CALL_URL}">Book a call with Shaun →</a></p>` : '';
+  const call = x.call ? `<p class="call-line">Want to talk this through properly? <a href="${CALL_URL}" target="_blank" rel="noopener">Book a call with Shaun →</a></p>` : '';
   const back = mode === 'email' ? '' : `<button class="back" type="button" data-act="close">Back to ${x.kind === 'bonus' ? 'bonus library' : 'modules'}</button>`;
   const next = nx ? `<button class="next" type="button" data-act="next"><small>Up next · ${label(nx)}</small><strong>${nx.title}</strong><span class="next-arrow" aria-hidden="true">→</span></button>` : '';
 
@@ -666,7 +679,7 @@ function buildPanel(x) {
       <div class="panel-main">${player}
         <div class="notes"><p class="kicker">${label(x)}</p><h2>${x.title}</h2><div class="module-text">${body}</div>${call}</div>
       </div>
-      <aside class="panel-side"><p class="kicker">Your progress</p><span class="watch-slot">${watchButtonHTML(x)}</span>${next}<a class="call-btn" href="${CALL_URL}">Book a call with Shaun &rarr;</a><p class="side-note">${sideNote()}</p>${back}</aside>
+      <aside class="panel-side"><p class="kicker">Your progress</p><span class="watch-slot">${watchButtonHTML(x)}</span>${next}<a class="call-btn" href="${CALL_URL}" target="_blank" rel="noopener">Book a call with Shaun &rarr;</a><p class="side-note">${sideNote()}</p>${back}</aside>
     </div>`;
   el.addEventListener('click', e => {
     const b = e.target.closest('[data-act]');
